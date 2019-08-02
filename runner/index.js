@@ -33,7 +33,8 @@ const queue = new Queue(stopFn, runner)
 
 if (config.server.schedule) {
   // run this every day at midnight, at least
-  const cron = '0 0 * * *'
+  // const cron = '0 0 * * *'
+  const cron = '0 0 0,30 * *' // every 30 minutes
   config.log.info(`installing scheduled run with this schema: [${cron}]`)
   schedule.scheduleJob(cron, function () {
     queue.add({
