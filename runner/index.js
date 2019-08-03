@@ -34,14 +34,39 @@ const queue = new Queue(stopFn, runner)
 if (config.server.schedule) {
   // run this every day at midnight, at least
   // const cron = '0 0 * * *'
-  const cron = '0 0 0,30 * *' // every 30 minutes
+  const cron = '0,10,20,30,40,50 * * * *' // every 10 minutes
   config.log.info(`installing scheduled run with this schema: [${cron}]`)
   schedule.scheduleJob(cron, function () {
     queue.add({
       commit: '',
+      target: 'js-minion-lite',
+      clinic: {
+        // enabled: true
+        enabled: false
+      },
+      remote: true,
+      nightly: true
+    })
+    queue.add({
+      commit: '',
+      target: 'go-minion',
+      clinic: {
+        // enabled: true
+        enabled: false
+      },
+      remote: true,
+      nightly: true
+    })
+  })
+  const cron2 = '9 0,6,12,18 * * *' // every 6 hours
+  config.log.info(`installing scheduled run with this schema: [${cron2}]`)
+  schedule.scheduleJob(cron2, function () {
+    queue.add({
+      commit: '',
       target: 'js-minion',
       clinic: {
-        enabled: true
+        // enabled: true
+        enabled: false
       },
       remote: true,
       nightly: true
